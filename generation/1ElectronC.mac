@@ -1,0 +1,60 @@
+/random/setSavingFlag 0
+
+/persistency/gdml/read detector.gdml
+
+/ldmx/pw/enable
+/ldmx/pw/read scoringdetector.gdml
+
+# Enable biasing and set parameters.  This configuration specifies that 
+# the biasing operator is applied to electrons with energy above 0 MeV.
+
+# Initialize the run
+/run/initialize
+
+/ldmx/generators/gps/enable
+/gps/number 1
+/gps/particle e-
+#/gps/direction 0 0 1
+/gps/pos/centre 0 0 200 mm
+#/gps/ene/type Mono
+#/gps/ene/mono 500 MeV
+/gps/ang/type iso
+/gps/ang/mintheta 160 deg
+/gps/ang/maxtheta 180 deg
+/gps/verbose 0
+
+/gps/ene/type Lin
+/gps/ene/min 0 GeV
+/gps/ene/max 3 GeV
+/gps/ene/gradient 0
+/gps/ene/intercept 1
+
+
+/ldmx/plugins/load EventPrintPlugin
+
+
+
+/ldmx/plugins/load TargetBremFilter libBiasing.so
+/ldmx/plugins/TargetBremFilter/volume target_PV
+
+
+/ldmx/plugins/load TrackFilterPlugin
+
+/ldmx/plugins/TrackFilterPlugin/process photonNuclear true
+/ldmx/plugins/TrackFilterPlugin/region CalorimeterRegion True
+/ldmx/plugins/TrackFilterPlugin/action pre
+/ldmx/plugins/TrackFilterPlugin/create CalFilter
+
+# Print a status every 1000 events.
+/ldmx/plugins/EventPrintPlugin/modulus 10
+
+# Write the events that pass the filter to pn_output.root.
+/ldmx/persistency/root/verbose 0
+/ldmx/persistency/root/file 0-3GeVAng170-1801E_100000.root
+/ldmx/persistency/root/dropCol HcalScoringPlaneHits
+
+
+/random/setSeeds 123 8365
+
+#/random/setSeeds 123 8435
+/run/beamOn 100000
