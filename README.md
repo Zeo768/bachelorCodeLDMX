@@ -25,3 +25,6 @@ The outputfiles are named according to a certain scheme: CE,Energy range,fix,C, 
 Here the main part is the modelsigma python files which computes the energy resolution of the different models on data sets with certain energy. The code also computes a Mean squared error and a mean absolute error for the different models. I then in the end plots the result as seen from the main result plots in the thesis.
 
 The plot* files are just quickly written code used to visualize different parts of the data files. plotDists.py.py(excellent name...) plots x,y and z distributions of the hits in an event, plotarray.py plots the 3d distribution of an event and plotenergy.py plots the different energy values either true or the sum of the hits in the array scaled up.
+
+
+// Daniel Magdalinski
